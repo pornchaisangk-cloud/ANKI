@@ -303,21 +303,59 @@
   const MIN = 60000;
   const NEW_PER_SESSION = 20;
 
-  // ---------- Storage ----------
-  let state = load();
-  function load() {
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (raw) return JSON.parse(raw);
-    } catch (e) {}
-    return { decks: [] };
-  }
+  // ---------- Supabase ----------
+  const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
+  const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  let user = null;
+  let state = { decks: [] };
+  let saveTimer = null;
+
+  // บันทึกแบบดีเลย์เล็กน้อย เพื่อไม่ยิง request ทุกการกดปุ่ม
   function save() {
-    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(pushAll, 400);
   }
 
+  async function pushAll() {
+    if (!user) return;
+    const decks = state.decks.map(d => ({ id: d.id, user_id: user.id, name: d.name }));
+    const cards = state.decks.flatMap(d => d.cards.map(c => ({
+      id: c.id,
+      user_id: user.id,
+      deck_id: d.id,
+      front: c.front,
+      back: c.back,
+      ease: c.ease,
+      reps: c.reps,
+      interval_days: c.interval,
+      due: c.due
+    })));
+    const r1 = decks.length ? await sb.from('decks').upsert(decks) : { error: null };
+    const r2 = cards.length ? await sb.from('cards').upsert(cards) : { error: null };
+    if (r1.error || r2.error) console.error('Sync error', r1.error || r2.error);
+  }
+
+  async function loadAll() {
+    const [d, c] = await Promise.all([
+      sb.from('decks').select('*').order('created_at'),
+      sb.from('cards').select('*')
+    ]);
+    if (d.error || c.error) throw d.error || c.error;
+    state.decks = d.data.map(x => ({ id: x.id, name: x.name, cards: [] }));
+    const byId = Object.fromEntries(state.decks.map(x => [x.id, x]));
+    c.data.forEach(x => byId[x.deck_id]?.cards.push({
+      id: x.id, front: x.front, back: x.back,
+      ease: x.ease, reps: x.reps, interval: x.interval_days, due: Number(x.due)
+    }));
+  }
+
+  async function deleteDeckRemote(id) { await sb.from('decks').delete().eq('id', id); }
+  async function deleteCardRemote(id) { await sb.from('cards').delete().eq('id', id); }
+
   // ---------- Helpers ----------
-  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+   const uid = () => crypto.randomUUID();
   const esc = s => String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
   const getDeck = id => state.decks.find(d => d.id === id);
 
@@ -678,3 +716,4 @@
 </script>
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
