@@ -52,39 +52,32 @@
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     background: color-mix(in srgb, var(--bg) 80%, transparent);
     border-bottom: 1px solid var(--line);
-    padding: env(safe-area-inset-top, 0px) 0 0;
+    padding-top: env(safe-area-inset-top, 0px);
   }
   .bar {
     max-width: 720px;
     margin: 0 auto;
     padding: 14px 20px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
     gap: 12px;
   }
-  .title { font-size: 17px; font-weight: 600; letter-spacing: -0.2px; }
-  .crumb { color: var(--blue); cursor: pointer; font-size: 15px; background: none; border: 0; padding: 4px 0; font-family: inherit; }
+  .title { font-size: 17px; font-weight: 600; letter-spacing: -0.2px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .crumb { color: var(--blue); cursor: pointer; font-size: 15px; background: none; border: 0; padding: 4px 0; font-family: inherit; justify-self: start; }
+  .logout { color: var(--muted); cursor: pointer; font-size: 14px; background: none; border: 0; padding: 4px 0; font-family: inherit; justify-self: end; }
+  .logout:hover { color: var(--red); }
 
   main {
     max-width: 720px;
     margin: 0 auto;
     padding: 28px 20px 60px;
   }
-  h1 {
-    font-size: 34px;
-    font-weight: 700;
-    letter-spacing: -0.6px;
-    margin: 0 0 6px;
-  }
+  h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.6px; margin: 0 0 6px; }
   .sub { color: var(--muted); font-size: 15px; margin: 0 0 24px; }
   .section-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    margin: 28px 4px 8px;
+    font-size: 13px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.4px; margin: 28px 4px 8px;
   }
 
   .panel {
@@ -95,51 +88,30 @@
     overflow: hidden;
   }
   .row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 16px 18px;
-    border-top: 1px solid var(--line);
-    cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 16px 18px; border-top: 1px solid var(--line); cursor: pointer;
     transition: background .15s ease;
   }
   .row:first-child { border-top: 0; }
   .row:hover { background: color-mix(in srgb, var(--text) 3%, transparent); }
   .row-main { min-width: 0; flex: 1; }
-  .row-title {
-    font-size: 17px;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  .row-title { font-size: 17px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .row-meta { font-size: 13px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row-actions { display: flex; gap: 4px; flex-shrink: 0; }
   .chev { color: var(--muted); font-size: 20px; }
+  .card-item { align-items: flex-start; }
+  .card-item .row-title, .card-item .row-meta { white-space: normal; }
 
   .badge {
-    font-size: 13px;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 980px;
-    background: color-mix(in srgb, var(--blue) 14%, transparent);
-    color: var(--blue);
-    white-space: nowrap;
+    font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 980px;
+    background: color-mix(in srgb, var(--blue) 14%, transparent); color: var(--blue); white-space: nowrap;
   }
   .badge.zero { background: color-mix(in srgb, var(--muted) 14%, transparent); color: var(--muted); }
 
   .btn {
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 500;
-    border: 0;
-    border-radius: 980px;
-    padding: 10px 20px;
-    cursor: pointer;
-    background: var(--blue);
-    color: #fff;
-    transition: background .15s ease, transform .05s ease, opacity .15s ease;
-    white-space: nowrap;
+    font-family: inherit; font-size: 15px; font-weight: 500; border: 0; border-radius: 980px;
+    padding: 10px 20px; cursor: pointer; background: var(--blue); color: #fff;
+    transition: background .15s ease, transform .05s ease, opacity .15s ease; white-space: nowrap;
   }
   .btn:hover { background: var(--blue-hover); }
   .btn:active { transform: scale(0.98); }
@@ -150,119 +122,44 @@
   .btn.danger:hover { background: color-mix(in srgb, var(--red) 10%, transparent); }
   .btn.big { font-size: 17px; padding: 14px 28px; }
   .btn.full { width: 100%; }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
 
-  .form {
-    padding: 18px;
-    display: grid;
-    gap: 12px;
-  }
+  .form { padding: 18px; display: grid; gap: 12px; }
   .field-label { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: -6px; }
-  input[type="text"], textarea {
-    font-family: inherit;
-    font-size: 16px;
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 12px;
-    border: 1px solid var(--line);
-    background: var(--bg);
-    color: var(--text);
-    outline: none;
-    transition: box-shadow .15s ease, border-color .15s ease;
-    resize: vertical;
+  input[type="text"], input[type="email"], textarea {
+    font-family: inherit; font-size: 16px; width: 100%; padding: 12px 14px;
+    border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--text);
+    outline: none; transition: box-shadow .15s ease, border-color .15s ease; resize: vertical;
   }
-  input[type="text"]:focus, textarea:focus {
+  input:focus, textarea:focus {
     border-color: var(--blue);
     box-shadow: 0 0 0 4px color-mix(in srgb, var(--blue) 20%, transparent);
   }
   .form-actions { display: flex; justify-content: flex-end; gap: 10px; }
 
-  .empty {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--muted);
-    font-size: 15px;
-  }
+  .empty { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 15px; }
 
-  .card-item { align-items: flex-start; }
-  .card-item .row-title { white-space: normal; font-weight: 500; }
-  .card-item .row-meta { white-space: normal; }
-
-  /* Study */
-  .study-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 22px;
-    margin-top: 8px;
-  }
-  .progress {
-    width: 100%;
-    height: 4px;
-    border-radius: 4px;
-    background: var(--line);
-    overflow: hidden;
-  }
-  .progress > div {
-    height: 100%;
-    background: var(--blue);
-    transition: width .3s ease;
-  }
+  .progress { width: 100%; height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; }
+  .progress > div { height: 100%; background: var(--blue); transition: width .3s ease; }
+  .study-wrap { display: flex; flex-direction: column; align-items: center; gap: 22px; margin-top: 8px; }
   .counter { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .flashcard {
-    width: 100%;
-    min-height: 300px;
-    background: var(--surface);
-    border-radius: 24px;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--line);
-    padding: 36px 28px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 18px;
-    animation: rise .25s ease;
+    width: 100%; min-height: 300px; background: var(--surface); border-radius: 24px;
+    box-shadow: var(--shadow); border: 1px solid var(--line); padding: 36px 28px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; gap: 18px; animation: rise .25s ease;
   }
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: none; }
-  }
-  .face-label {
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: .6px;
-    color: var(--muted);
-  }
-  .face-text {
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: -0.3px;
-    line-height: 1.35;
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .face-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); }
+  .face-text { font-size: 26px; font-weight: 600; letter-spacing: -0.3px; line-height: 1.35; white-space: pre-wrap; word-break: break-word; }
+  .face-text.small { font-size: 18px; opacity: .6; font-weight: 500; }
   .divider { width: 48px; height: 1px; background: var(--line); }
-  .back-text { font-size: 20px; font-weight: 400; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+  .back-text { font-size: 20px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
 
-  .grades {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-  }
+  .grades { width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
   .grade {
-    font-family: inherit;
-    border: 0;
-    border-radius: 16px;
-    padding: 14px 6px;
-    cursor: pointer;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
+    font-family: inherit; border: 0; border-radius: 16px; padding: 14px 6px; cursor: pointer; color: #fff;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
     transition: transform .05s ease, filter .15s ease;
   }
   .grade:hover { filter: brightness(1.05); }
@@ -277,6 +174,7 @@
 
   .hint { font-size: 13px; color: var(--muted); text-align: center; }
   .done-icon { font-size: 56px; margin-bottom: 4px; }
+  .center { text-align: center; }
 
   @media (max-width: 480px) {
     h1 { font-size: 28px; }
@@ -290,72 +188,40 @@
   <div class="bar">
     <button class="crumb" id="back" hidden>‹ กลับ</button>
     <div class="title" id="title">Flashcards</div>
-    <div style="width:48px"></div>
+    <button class="logout" id="logout" hidden data-a="logout">ออกจากระบบ</button>
   </div>
 </header>
 
-<main id="app"></main>
+<main id="app"><div class="empty">กำลังโหลด...</div></main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 (function () {
-  const KEY = 'flashcards-lite-v1';
+  // ---------- Config ----------
+  const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_TaLv06iSt_x_3hfMz1NitQ_FBOfAt7o';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
   const DAY = 86400000;
   const MIN = 60000;
   const NEW_PER_SESSION = 20;
 
-  // ---------- Supabase ----------
-  const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
-  const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
-  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
+  // ---------- State ----------
   let user = null;
+  let loaded = false;
   let state = { decks: [] };
+  let view = { name: 'home' };   // home | deck | study
+  let session = null;
+  let pendingEdit = null;
   let saveTimer = null;
 
-  // บันทึกแบบดีเลย์เล็กน้อย เพื่อไม่ยิง request ทุกการกดปุ่ม
-  function save() {
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(pushAll, 400);
-  }
-
-  async function pushAll() {
-    if (!user) return;
-    const decks = state.decks.map(d => ({ id: d.id, user_id: user.id, name: d.name }));
-    const cards = state.decks.flatMap(d => d.cards.map(c => ({
-      id: c.id,
-      user_id: user.id,
-      deck_id: d.id,
-      front: c.front,
-      back: c.back,
-      ease: c.ease,
-      reps: c.reps,
-      interval_days: c.interval,
-      due: c.due
-    })));
-    const r1 = decks.length ? await sb.from('decks').upsert(decks) : { error: null };
-    const r2 = cards.length ? await sb.from('cards').upsert(cards) : { error: null };
-    if (r1.error || r2.error) console.error('Sync error', r1.error || r2.error);
-  }
-
-  async function loadAll() {
-    const [d, c] = await Promise.all([
-      sb.from('decks').select('*').order('created_at'),
-      sb.from('cards').select('*')
-    ]);
-    if (d.error || c.error) throw d.error || c.error;
-    state.decks = d.data.map(x => ({ id: x.id, name: x.name, cards: [] }));
-    const byId = Object.fromEntries(state.decks.map(x => [x.id, x]));
-    c.data.forEach(x => byId[x.deck_id]?.cards.push({
-      id: x.id, front: x.front, back: x.back,
-      ease: x.ease, reps: x.reps, interval: x.interval_days, due: Number(x.due)
-    }));
-  }
-
-  async function deleteDeckRemote(id) { await sb.from('decks').delete().eq('id', id); }
-  async function deleteCardRemote(id) { await sb.from('cards').delete().eq('id', id); }
+  const app = document.getElementById('app');
+  const titleEl = document.getElementById('title');
+  const backBtn = document.getElementById('back');
+  const logoutBtn = document.getElementById('logout');
 
   // ---------- Helpers ----------
-   const uid = () => crypto.randomUUID();
+  const uid = () => crypto.randomUUID();
   const esc = s => String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
   const getDeck = id => state.decks.find(d => d.id === id);
 
@@ -368,15 +234,13 @@
     return (d / 365).toFixed(1) + ' ปี';
   }
 
-  // ---------- SM-2 scheduling ----------
+  // ---------- SM-2 ----------
   // Grades: 0 = ลืม, 3 = ยาก, 4 = ปกติ, 5 = ง่าย
   function nextState(c, q) {
     const now = Date.now();
-    let ease = Math.max(1.3, c.ease + 0.1 - (5 - q) * (0.08 + (5 - q) * 0.02));
-    if (q < 3) {
-      return { ease, reps: 0, interval: 0, due: now + 10 * MIN };
-    }
-    let reps = c.reps + 1;
+    const ease = Math.max(1.3, c.ease + 0.1 - (5 - q) * (0.08 + (5 - q) * 0.02));
+    if (q < 3) return { ease, reps: 0, interval: 0, due: now + 10 * MIN };
+    const reps = c.reps + 1;
     let interval;
     if (reps === 1) interval = 1;
     else if (reps === 2) interval = 6;
@@ -399,35 +263,117 @@
     return [...learned, ...newOnes];
   }
 
-  // ---------- Session ----------
-  let view = { name: 'home' };
-  let session = null;
-  let pendingEdit = null;
+  // ---------- Sync with Supabase ----------
+  function scheduleSave() {
+    if (!user || !loaded) return;
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(pushAll, 400);
+  }
+
+  async function pushAll() {
+    if (!user) return;
+    const decks = state.decks.map(d => ({ id: d.id, user_id: user.id, name: d.name }));
+    const cards = state.decks.flatMap(d => d.cards.map(c => ({
+      id: c.id,
+      user_id: user.id,
+      deck_id: d.id,
+      front: c.front,
+      back: c.back,
+      ease: c.ease,
+      reps: c.reps,
+      interval_days: c.interval,
+      due: c.due
+    })));
+    const r1 = decks.length ? await sb.from('decks').upsert(decks) : { error: null };
+    const r2 = cards.length ? await sb.from('cards').upsert(cards) : { error: null };
+    if (r1.error || r2.error) console.error('Sync error:', r1.error || r2.error);
+  }
+
+  async function loadAll() {
+    const [d, c] = await Promise.all([
+      sb.from('decks').select('*').order('created_at', { ascending: true }),
+      sb.from('cards').select('*')
+    ]);
+    if (d.error) throw d.error;
+    if (c.error) throw c.error;
+    state.decks = d.data.map(x => ({ id: x.id, name: x.name, cards: [] }));
+    const byId = Object.fromEntries(state.decks.map(x => [x.id, x]));
+    c.data.forEach(x => {
+      const deck = byId[x.deck_id];
+      if (!deck) return;
+      deck.cards.push({
+        id: x.id,
+        front: x.front,
+        back: x.back,
+        ease: x.ease,
+        reps: x.reps,
+        interval: x.interval_days,
+        due: Number(x.due)
+      });
+    });
+  }
+
+  async function deleteDeckRemote(id) {
+    const { error } = await sb.from('decks').delete().eq('id', id);
+    if (error) console.error(error);
+  }
+
+  async function deleteCardRemote(id) {
+    const { error } = await sb.from('cards').delete().eq('id', id);
+    if (error) console.error(error);
+  }
+
+  // ---------- Navigation ----------
+  function go(v) {
+    view = v;
+    pendingEdit = null;
+    render();
+    window.scrollTo({ top: 0 });
+  }
+
+  function goBack() {
+    if (view.name === 'study') {
+      session = null;
+      go({ name: 'deck', id: view.id });
+    } else if (view.name === 'deck') {
+      go({ name: 'home' });
+    }
+  }
+
+  function setHeader(title, showBack) {
+    titleEl.textContent = title;
+    backBtn.hidden = !showBack;
+    logoutBtn.hidden = !user;
+  }
 
   // ---------- Renderers ----------
-  const app = document.getElementById('app');
-  const titleEl = document.getElementById('title');
-  const backBtn = document.getElementById('back');
-
-  function setHeader(title, back) {
-    titleEl.textContent = title;
-    backBtn.hidden = !back;
-    backBtn.dataset.a = back || '';
+  function renderLogin() {
+    setHeader('Flashcards', false);
+    app.innerHTML = `
+      <h1>เข้าสู่ระบบ</h1>
+      <p class="sub">ใส่อีเมลเพื่อรับลิงก์ล็อกอิน ไม่ต้องใช้รหัสผ่าน</p>
+      <div class="panel form">
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+        <div class="form-actions">
+          <button class="btn" data-a="login">ส่งลิงก์</button>
+        </div>
+      </div>`;
+    const input = document.getElementById('email');
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') sendMagicLink(); });
   }
 
   function renderHome() {
-    setHeader('Flashcards', null);
-    const decks = state.decks;
-    const totalDue = decks.reduce((n, d) => n + dueCards(d).length, 0);
+    setHeader('Flashcards', false);
+    const totalDue = state.decks.reduce((n, d) => n + dueCards(d).length, 0);
     let html = `
       <h1>วันนี้</h1>
       <p class="sub">${totalDue > 0 ? `มี ${totalDue} การ์ดที่ถึงเวลาทบทวน` : 'ยังไม่มีการ์ดที่ต้องทบทวนตอนนี้'}</p>
-      <div class="section-label">ชุดการ์ด</div>
-    `;
-    if (!decks.length) {
+      <div class="section-label">ชุดการ์ด</div>`;
+
+    if (!state.decks.length) {
       html += `<div class="panel"><div class="empty">ยังไม่มีชุดการ์ด เริ่มสร้างชุดแรกด้านล่างได้เลย</div></div>`;
     } else {
-      html += `<div class="panel">` + decks.map(d => {
+      html += `<div class="panel">` + state.decks.map(d => {
         const due = dueCards(d).length;
         return `
           <div class="row" data-a="open-deck" data-id="${d.id}">
@@ -440,6 +386,7 @@
           </div>`;
       }).join('') + `</div>`;
     }
+
     html += `
       <div class="section-label">สร้างชุดใหม่</div>
       <div class="panel form">
@@ -448,42 +395,6 @@
           <button class="btn" data-a="new-deck">สร้างชุด</button>
         </div>
       </div>`;
-    app.innerHTML = html;
-  }
-
-  function renderDeck() {
-    const deck = getDeck(view.id);
-    if (!deck) { view = { name: 'home' }; return render(); }
-    setHeader(deck.name, 'home');
-    const due = dueCards(deck).length;
-
-    let html = `
-      <h1>${esc(deck.name)}</h1>
-      <p class="sub">${deck.cards.length} การ์ด · ${due} ใบพร้อมทบทวน</p>
-      <div style="display:flex; gap:10px; margin-bottom: 8px; flex-wrap: wrap;">
-        <button class="btn big" data-a="start-study" ${due ? '' : 'disabled'}>เริ่มทบทวน</button>
-        <button class="btn ghost" data-a="delete-deck">ลบชุดนี้</button>
-      </div>
-      <div class="section-label">การ์ด</div>`;
-
-    if (!deck.cards.length) {
-      html += `<div class="panel"><div class="empty">ยังไม่มีการ์ดในชุดนี้</div></div>`;
-    } else {
-      html += `<div class="panel">` + deck.cards.map(c => `
-        <div class="row card-item">
-          <div class="row-main">
-            <div class="row-title">${esc(c.front)}</div>
-            <div class="row-meta">${esc(c.back)}</div>
-          </div>
-          <div style="display:flex; gap:4px; flex-shrink:0;">
-            <button class="btn ghost" data-a="edit-card" data-id="${c.id}">แก้ไข</button>
-            <button class="btn danger" data-a="delete-card" data-id="${c.id}">ลบ</button>
-          </div>
-        </div>`).join('') + `</div>`;
-    }
-
-    html += `
-      ${cardForm(deck)}`;
     app.innerHTML = html;
   }
 
@@ -503,14 +414,49 @@
       </div>`;
   }
 
+  function renderDeck() {
+    const deck = getDeck(view.id);
+    if (!deck) return go({ name: 'home' });
+    setHeader(deck.name, true);
+    const due = dueCards(deck).length;
+
+    let html = `
+      <h1>${esc(deck.name)}</h1>
+      <p class="sub">${deck.cards.length} การ์ด · ${due} ใบพร้อมทบทวน</p>
+      <div class="btn-row">
+        <button class="btn big" data-a="start-study" ${due ? '' : 'disabled'}>เริ่มทบทวน</button>
+        <button class="btn ghost" data-a="delete-deck">ลบชุดนี้</button>
+      </div>
+      <div class="section-label">การ์ด</div>`;
+
+    if (!deck.cards.length) {
+      html += `<div class="panel"><div class="empty">ยังไม่มีการ์ดในชุดนี้</div></div>`;
+    } else {
+      html += `<div class="panel">` + deck.cards.map(c => `
+        <div class="row card-item">
+          <div class="row-main">
+            <div class="row-title">${esc(c.front)}</div>
+            <div class="row-meta">${esc(c.back)}</div>
+          </div>
+          <div class="row-actions">
+            <button class="btn ghost" data-a="edit-card" data-id="${c.id}">แก้ไข</button>
+            <button class="btn danger" data-a="delete-card" data-id="${c.id}">ลบ</button>
+          </div>
+        </div>`).join('') + `</div>`;
+    }
+
+    html += cardForm(deck);
+    app.innerHTML = html;
+  }
+
   function renderStudy() {
     const deck = getDeck(session.deckId);
-    if (!deck) { view = { name: 'home' }; session = null; return render(); }
-    setHeader(deck.name, 'deck');
+    if (!deck) return go({ name: 'home' });
+    setHeader(deck.name, true);
 
     if (session.index >= session.queue.length) {
       app.innerHTML = `
-        <div class="study-wrap" style="margin-top:60px; text-align:center;">
+        <div class="study-wrap" style="margin-top:60px;">
           <div class="done-icon">✓</div>
           <h1>เสร็จแล้ว</h1>
           <p class="sub">ทบทวนไปทั้งหมด ${session.reviewed} การ์ด</p>
@@ -522,25 +468,20 @@
     const c = session.queue[session.index];
     const pct = (session.index / session.queue.length) * 100;
 
-    let body;
-    if (!session.flipped) {
-      body = `
-        <div class="face-label">คำถาม</div>
-        <div class="face-text">${esc(c.front)}</div>`;
-    } else {
-      body = `
-        <div class="face-label">คำถาม</div>
-        <div class="face-text" style="font-size:18px; opacity:.6;">${esc(c.front)}</div>
-        <div class="divider"></div>
-        <div class="face-label">คำตอบ</div>
-        <div class="back-text">${esc(c.back)}</div>`;
-    }
+    const body = !session.flipped
+      ? `<div class="face-label">คำถาม</div>
+         <div class="face-text">${esc(c.front)}</div>`
+      : `<div class="face-label">คำถาม</div>
+         <div class="face-text small">${esc(c.front)}</div>
+         <div class="divider"></div>
+         <div class="face-label">คำตอบ</div>
+         <div class="back-text">${esc(c.back)}</div>`;
 
     const controls = !session.flipped
       ? `<button class="btn big full" data-a="flip">แสดงคำตอบ</button>
          <div class="hint">กด Space เพื่อดูคำตอบ</div>`
       : `<div class="grades">
-          ${[[0,'ลืม','g0','1'],[3,'ยาก','g3','2'],[4,'ปกติ','g4','3'],[5,'ง่าย','g5','4']].map(([q,name,cls,key]) => `
+          ${[[0, 'ลืม', 'g0', '1'], [3, 'ยาก', 'g3', '2'], [4, 'ปกติ', 'g4', '3'], [5, 'ง่าย', 'g5', '4']].map(([q, name, cls, key]) => `
             <button class="grade ${cls}" data-a="grade" data-q="${q}">
               <span class="gname">${name}</span>
               <span class="gint">${previewLabel(c, q)}</span>
@@ -558,23 +499,46 @@
   }
 
   function render() {
+    if (!user) return renderLogin();
     if (view.name === 'home') renderHome();
     else if (view.name === 'deck') renderDeck();
     else if (view.name === 'study') renderStudy();
   }
 
   // ---------- Actions ----------
-  function go(v) { view = v; pendingEdit = null; render(); window.scrollTo({ top: 0 }); }
+  async function sendMagicLink() {
+    const email = (document.getElementById('email').value || '').trim();
+    if (!email) return document.getElementById('email').focus();
+    const { error } = await sb.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: location.href.split('#')[0] }
+    });
+    alert(error ? error.message : 'ส่งลิงก์ไปที่อีเมลแล้ว กรุณาเช็คกล่องจดหมาย');
+  }
 
-  document.addEventListener('click', e => {
+  function gradeCurrent(q) {
+    const c = session.queue[session.index];
+    Object.assign(c, nextState(c, q));
+    scheduleSave();
+    session.index++;
+    session.reviewed++;
+    session.flipped = false;
+    renderStudy();
+  }
+
+  document.addEventListener('click', async e => {
     const el = e.target.closest('[data-a]');
     if (!el || el.disabled) return;
     const a = el.dataset.a;
 
-    if (a === 'home') return go({ name: 'home' });
-    if (a === 'deck') return go({ name: 'deck', id: view.id });
+    if (a === 'login') return sendMagicLink();
+
+    if (a === 'logout') {
+      await sb.auth.signOut();
+      return;
+    }
+
     if (a === 'open-deck') return go({ name: 'deck', id: el.dataset.id });
-    if (a === 'back-deck') { session = null; return go({ name: 'deck', id: view.id || (session && session.deckId) }); }
 
     if (a === 'new-deck') {
       const input = document.getElementById('new-deck-name');
@@ -582,7 +546,7 @@
       if (!name) return input.focus();
       const deck = { id: uid(), name, cards: [] };
       state.decks.unshift(deck);
-      save();
+      scheduleSave();
       return go({ name: 'deck', id: deck.id });
     }
 
@@ -590,7 +554,7 @@
       const deck = getDeck(view.id);
       if (!deck || !confirm(`ลบชุด "${deck.name}" และการ์ดทั้งหมดในชุดนี้?`)) return;
       state.decks = state.decks.filter(d => d.id !== deck.id);
-      save();
+      deleteDeckRemote(deck.id);
       return go({ name: 'home' });
     }
 
@@ -621,14 +585,16 @@
       } else {
         deck.cards.push({ id: uid(), front, back, ease: 2.5, reps: 0, interval: 0, due: 0 });
       }
-      save();
+      scheduleSave();
       return renderDeck();
     }
 
     if (a === 'delete-card') {
       const deck = getDeck(view.id);
-      deck.cards = deck.cards.filter(c => c.id !== el.dataset.id);
-      save();
+      const cardId = el.dataset.id;
+      deck.cards = deck.cards.filter(c => c.id !== cardId);
+      if (pendingEdit === cardId) pendingEdit = null;
+      deleteCardRemote(cardId);
       return renderDeck();
     }
 
@@ -637,8 +603,7 @@
       const queue = dueCards(deck);
       if (!queue.length) return;
       session = { deckId: deck.id, queue, index: 0, flipped: false, reviewed: 0 };
-      view = { name: 'study' };
-      return render();
+      return go({ name: 'study', id: deck.id });
     }
 
     if (a === 'flip') {
@@ -646,74 +611,63 @@
       return renderStudy();
     }
 
-    if (a === 'grade') {
-      const q = Number(el.dataset.q);
-      const c = session.queue[session.index];
-      Object.assign(c, nextState(c, q));
-      save();
-      session.index++;
-      session.reviewed++;
-      session.flipped = false;
-      return renderStudy();
+    if (a === 'grade') return gradeCurrent(Number(el.dataset.q));
+
+    if (a === 'back-deck') {
+      session = null;
+      return go({ name: 'deck', id: view.id });
     }
   });
 
-  document.getElementById('back').addEventListener('click', e => {
-    const a = e.currentTarget.dataset.a;
-    if (a === 'home') go({ name: 'home' });
-    else if (a === 'deck') { session = null; go({ name: 'deck', id: view.id || (session && session.deckId) }); }
-  });
+  backBtn.addEventListener('click', goBack);
 
   // Keyboard shortcuts while studying
   document.addEventListener('keydown', e => {
     if (view.name !== 'study' || !session) return;
     if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
-    if (e.key === 'Escape') {
-      const id = session.deckId;
-      session = null;
-      return go({ name: 'deck', id });
-    }
+
+    if (e.key === 'Escape') return goBack();
+
     if (!session.flipped && (e.code === 'Space' || e.key === 'Enter')) {
       e.preventDefault();
       session.flipped = true;
       return renderStudy();
     }
+
     if (session.flipped && ['1', '2', '3', '4'].includes(e.key)) {
-      const q = { '1': 0, '2': 3, '3': 4, '4': 5 }[e.key];
-      const c = session.queue[session.index];
-      Object.assign(c, nextState(c, q));
-      save();
-      session.index++;
-      session.reviewed++;
-      session.flipped = false;
-      renderStudy();
+      gradeCurrent({ '1': 0, '2': 3, '3': 4, '4': 5 }[e.key]);
     }
   });
 
-  // Track current deck id for back navigation from study view
-  const origRender = render;
-  render = function () {
-    if (view.name === 'study' && session) backBtn.dataset.a = 'deck';
-    origRender();
-    if (view.name === 'deck') backBtn.dataset.a = 'home';
-    if (view.name === 'study' && session) {
-      setHeader(getDeck(session.deckId)?.name || '', 'deck');
-      view.id = session.deckId;
-    }
-  };
-
-  // Keep study-view back button pointing to the deck
-  backBtn.addEventListener('click', () => {
-    if (view.name === 'study' && session) {
-      const id = session.deckId;
+  // ---------- Auth ----------
+  sb.auth.onAuthStateChange(async (event, session) => {
+    const newUser = session?.user || null;
+    // Ignore token refreshes and repeated events for the same user,
+    // so an active study session is not re-rendered.
+    if (newUser && user && newUser.id === user.id && loaded) return;
+    if (!newUser) {
+      user = null;
+      loaded = false;
+      state = { decks: [] };
       session = null;
-      go({ name: 'deck', id });
+      view = { name: 'home' };
+      return render();
     }
-  }, true);
+    user = newUser;
+    if (!loaded) {
+      try {
+        await loadAll();
+        loaded = true;
+      } catch (err) {
+        alert('โหลดข้อมูลไม่สำเร็จ: ' + err.message);
+      }
+    }
+    view = { name: 'home' };
+    render();
+  });
 
   render();
 })();
 </script>
 </body>
 </html>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
